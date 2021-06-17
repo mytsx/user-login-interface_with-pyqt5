@@ -1,0 +1,16 @@
+QPushButton {
+    color: rgb(0, 185, 89);
+    border: 0px
+}
+
+QPushButton:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-style: inset
+}
+
+QPushButton:pressed {
+    background-color:rgb(0, 185, 89);
+    color: rgb(0, 0, 0);
+    border-style: inset;
+}
