@@ -45,67 +45,63 @@ class Ui_MainWindow(object):
         fontLineEdit = QFont("Consolas", 20, weight=75)
         fontLoginButton = QFont("Terminal", 30, 75)
         self.horizontalLayoutList = []
-        
+
         def my_decorator(func):
             def wrapper(index):
-                horLay= func()
-                self.gridLayout.addLayout(horLay, index, 0, 1, 1) 
+                horLay = func()
+                self.gridLayout.addLayout(horLay, index, 0, 1, 1)
                 self.horizontalLayoutList.append(horLay)
-                
+
             return wrapper
 
         @my_decorator
         def satir():
             self.horizontalLayout = QtWidgets.QHBoxLayout()
-            # içerik
-            self.generate_box(self.horizontalLayout, 8, "0,0,0")   
-            
-            return self.horizontalLayout   
+
+            self.generate_box(self.horizontalLayout, 8, "0,0,0")
+
+            return self.horizontalLayout
 
         ####################### 0. SATIR ####################### es
         satir(0)
-        ####################### 1. SATIR #######################
+        ####################### 1. SATIR ####################### decoratif buttons
         self.horizontalLayout1 = QtWidgets.QHBoxLayout()
 
         self.generate_box(self.horizontalLayout1, 1, "0,0,0")
-        self.decoratifButton(
-            Layout=self.horizontalLayout1,
-            harf="L",
-            fontFamily="Swis721 BlkOul BT",
-            color="185, 0, 0"
-        )
-        self.decoratifButton(
-            Layout=self.horizontalLayout1,
-            harf="O",
-            fontFamily="Swis721 BlkOul BT",
-            color="85, 255, 255"
-        )
-        self.decoratifButton(
-            Layout=self.horizontalLayout1,
-            harf="G",
-            fontFamily="Swis721 BlkOul BT",
-            color="26, 26, 255"
-        )
-        self.generate_box(self.horizontalLayout1, 1, "0,0,0")
-        self.decoratifButton(
-            Layout=self.horizontalLayout1,
-            harf="I",
-            fontFamily="Swis721 BlkOul BT",
-            color="255, 255, 0"
-        )
-        self.decoratifButton(
-            Layout=self.horizontalLayout1,
-            harf="N",
-            fontFamily="Swis721 BlkOul BT",
-            color="255, 85, 0"
-        )
+
+        def dbGenerator(word, colors, horLay):
+            syc=0
+            for l in word:
+                self.decoratifButton(
+                    Layout = horLay,
+                    harf = l,
+                    fontFamily = "Swis721 BlkOul BT",
+                    color = colors[syc]
+                )
+                syc+=1
+
+        self.logDict = {"word": "LOG",
+                   "colors": ["185, 0, 0",
+                              "85, 255, 255",
+                              "26, 26, 255"
+                              ]}
+        self.inDict = {"word": "IN",
+                  "colors": ["255, 255, 0",
+                             "255, 85, 0"
+                             ]}
+        dbGenerator(self.logDict["word"], self.logDict["colors"], self.horizontalLayout1)
 
         self.generate_box(self.horizontalLayout1, 1, "0,0,0")
+        
+        dbGenerator(self.inDict["word"], self.inDict["colors"], self.horizontalLayout1)
+
+        self.generate_box(self.horizontalLayout1, 1, "0,0,0")
+        
         self.gridLayout.addLayout(self.horizontalLayout1, 1, 0, 1, 1)
         self.horizontalLayoutList.append(self.horizontalLayout1)
-        ####################### 2. SATIR #######################
+        ####################### 2. SATIR ####################### es
         satir(2)
-        ####################### 3. SATIR #######################
+        ####################### 3. SATIR ####################### email adresi
         self.horizontalLayout3 = QtWidgets.QHBoxLayout()
 
         self.emailLE = QtWidgets.QLineEdit(self.centralwidget)
@@ -116,12 +112,12 @@ class Ui_MainWindow(object):
         self.emailLE.setObjectName("emailLE")
 
         self.horizontalLayout3.addWidget(self.emailLE)
-        
+
         self.gridLayout.addLayout(self.horizontalLayout3, 3, 0, 1, 1)
         self.horizontalLayoutList.append(self.horizontalLayout3)
-        ####################### 4. SATIR #######################
+        ####################### 4. SATIR ####################### es
         satir(4)
-        ####################### 5. SATIR #######################
+        ####################### 5. SATIR ####################### password
         self.horizontalLayout5 = QtWidgets.QHBoxLayout()
 
         self.passwordLE = QtWidgets.QLineEdit(self.centralwidget)
@@ -132,9 +128,10 @@ class Ui_MainWindow(object):
         self.passwordLE.setObjectName("passwordLE")
 
         self.horizontalLayout5.addWidget(self.passwordLE)
+        
         self.gridLayout.addLayout(self.horizontalLayout5, 5, 0, 1, 1)
         self.horizontalLayoutList.append(self.horizontalLayout5)
-        ####################### 6. SATIR #######################
+        ####################### 6. SATIR ####################### login button
         self.horizontalLayout6 = QtWidgets.QHBoxLayout()
 
         self.generate_box(self.horizontalLayout6, 5, "0,0,0")
@@ -156,10 +153,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addLayout(self.horizontalLayout6, 6, 0, 1, 1)
         self.horizontalLayoutList.append(self.horizontalLayout6)
-        ####################### 7. SATIR #######################
+        ####################### 7. SATIR ####################### es
         satir(7)
         #######################   END    #######################
-
 
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -195,12 +191,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout3.itemAt(0).widget().deleteLater()
         self.generate_box(self.horizontalLayout3, 8, "255,255,255")
         # butonları sil ve yerine kendi renlerinde widget ekle
-        decoratif_buton_indexleri_ve_color = [[1, "185, 0, 0"],
-                                              [2, "85, 255, 255"],
-                                              [3, "26, 26, 255"],
-                                              [4, "0,0,0"],
-                                              [5, "255, 255, 0"],
-                                              [6, "255, 85, 0"]]
+        a = [i for i in range(1,7)]
+        decoratif_buton_indexleri_ve_color = list(zip(a, self.logDict["colors"]+["0,0,0"]+self.inDict["colors"]))
 
         for index, color in decoratif_buton_indexleri_ve_color:
             self.widget_b = QtWidgets.QWidget(self.centralwidget)
@@ -212,30 +204,30 @@ class Ui_MainWindow(object):
             self.horizontalLayout1.insertWidget(
                 index+len(decoratif_buton_indexleri_ve_color), self.widget_b)
 
-        
         self.func_syc = 0
         self.intervals_ccow = [80, 40, 20, 20, 20, 15, 20]
         self.intervals_dw = [100 for i in range(7)]
         self.animateİnfo = {
             "ccow":
-                {"plus" : +1,
-                "carpan" : -1,
-                "fonksiyon" : self.changeColorsOfWidgets,
-                "itervals" : self.intervals_ccow},
-            "dw" :
-                {"plus" : -1,
-                "carpan" : 1,
-                "fonksiyon" : self.deleteWidgets,
-                "itervals" : self.intervals_dw},}
-        self.playWithWidgets(self.animateİnfo["ccow"]["fonksiyon"], count=8, interval=160, informations = self.animateİnfo["ccow"])
+                {"plus": +1,
+                 "carpan": -1,
+                 "fonksiyon": self.changeColorsOfWidgets,
+                 "itervals": self.intervals_ccow},
+            "dw":
+                {"plus": -1,
+                 "carpan": 1,
+                 "fonksiyon": self.deleteWidgets,
+                 "itervals": self.intervals_dw}, }
+        self.playWithWidgets(self.animateİnfo["ccow"]["fonksiyon"],
+                             count=8, interval=160, informations=self.animateİnfo["ccow"])
 
-
-    def changeColorsOfWidgets(self, horlay): 
+    def changeColorsOfWidgets(self, horlay):
         horlay.itemAt(self.index_c).widget(
         ).setStyleSheet("background-color: rgb(0, 255,0);")
         self.index_c += 1
+
     def deleteWidgets(self, horLay):
-        self.func_syc+=1
+        self.func_syc += 1
         for i in range(8):
             horLay.itemAt(i).widget().deleteLater()
         if self.func_syc == 9:
@@ -246,10 +238,12 @@ class Ui_MainWindow(object):
         inf = informations
         self.count = count  # 8
         counter = 0
-        def handler(): 
+
+        def handler():
             nonlocal counter
             counter += 1
-            slot(self.horizontalLayoutList[(self.func_syc+inf["plus"])*inf["carpan"]])
+            slot(self.horizontalLayoutList[(
+                self.func_syc+inf["plus"])*inf["carpan"]])
             # ilk çalıştırmada count = 8, counter = 1 olduğundan if'e girmiyor.
             # ve giris(f) 8' kere çalışıp counter(syc) 9'a geldiğinde
             # bir sonraki giris1(f) fonksiyonuna girip timer'ı ona göre kurup tekrarlıyor
@@ -259,19 +253,17 @@ class Ui_MainWindow(object):
                 self.index_c = 0
                 try:
                     self.playWithWidgets(inf["fonksiyon"],
-                             count=8,
-                             interval=inf["itervals"][self.func_syc], informations=inf)
+                                         count=8,
+                                         interval=inf["itervals"][self.func_syc], informations=inf)
                 except:  # burada da yine qtimer kullanılması gerekiyor.
                     self.func_syc = 0
-                    self.playWithWidgets(self.animateİnfo["dw"]["fonksiyon"], 8,100,informations = self.animateİnfo["dw"])
+                    self.playWithWidgets(
+                        self.animateİnfo["dw"]["fonksiyon"], 8, 100, informations=self.animateİnfo["dw"])
 
                 self.func_syc += 1
         timer = QtCore.QTimer()
         timer.timeout.connect(handler)
         timer.start(interval)
-
-
-
 
     def decoratifButton(self, Layout, harf, fontFamily, color):
         fontdecoratifButton = QFont(fontFamily, 50, weight=75)
